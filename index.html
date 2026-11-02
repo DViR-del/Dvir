@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Двір — прототип</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='128' fill='%231F5FBF'/%3E%3Cpath d='M167 150V362H239A106 106 0 0 0 239 150Z' fill='none' stroke='%23fff' stroke-width='56' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='250' cy='256' r='30' fill='%23F5B800'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Unbounded:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F5F7;--card:#fff;--ink:#16222E;--muted:#5C6B7A;--acc:#1F5FBF;--onacc:#fff;--sun:#F5B800;--red:#C8372D;--grn:#2E8B57;--line:#DDE3E9;--soft:#E8EEF6;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E151C;--card:#16202A;--ink:#E7EDF2;--muted:#95A4B3;--acc:#5B9BF5;--onacc:#0B1620;--line:#26323E;--soft:#1F2B37;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E151C;--card:#16202A;--ink:#E7EDF2;--muted:#95A4B3;--acc:#5B9BF5;--onacc:#0B1620;--line:#26323E;--soft:#1F2B37;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Onest,system-ui,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--card)}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.app{max-width:480px;margin:0 auto;min-height:100vh;border-inline:1px solid var(--line);padding-bottom:84px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--card);padding:12px 16px 18px;display:flex;align-items:center;justify-content:space-between}
+#sheet input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.sr{max-height:55vh;overflow:auto;margin:0 -16px}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='8'%3E%3Cpath d='M6 0l4 4-4 4-4-4z' fill='%23C8372D'/%3E%3Cpath d='M18 2l2 2-2 2-2-2z' fill='%23F5B800'/%3E%3C/svg%3E") repeat-x}
+.lg{height:34px;width:auto;display:block}.lg .w{fill:none;stroke:var(--ink);stroke-width:16;stroke-linecap:round;stroke-linejoin:round}
+.hd{padding:16px 16px 4px}.hd h1{margin:0;font:600 22px Unbounded,Onest,system-ui,sans-serif}.hd p{margin:4px 0 0}
+.mut{color:var(--muted);font-size:14px}
+.tabs{display:flex;background:var(--card);border-bottom:1px solid var(--line)}
+.tabs button{flex:1;background:none;border:0;border-bottom:3px solid transparent;padding:11px 0;color:var(--muted)}
+.tabs .on{border-color:var(--sun);color:var(--ink);font-weight:600}
+.post,.rw{background:var(--card);padding:14px 16px;border-bottom:1px solid var(--line)}
+.post p{margin:10px 0}
+.row,.rw{display:flex;align-items:center;gap:12px}
+.rw{width:100%;border:0;text-align:left;border-bottom:1px solid var(--line)}
+.grow{flex:1;min-width:0}
+.av{display:inline-grid;place-items:center;border-radius:50%;background:var(--c);color:#fff;font-weight:600;flex:none}
+.av.sq{border-radius:12px}
+.pic{height:260px;border-radius:10px;margin-bottom:10px}
+.acts{display:flex;gap:18px;color:var(--muted);font-size:14px}
+.acts button{background:none;border:0;padding:4px 0;color:inherit}
+.acts .on{color:var(--red);font-weight:600}
+.cm{margin-top:8px;padding:8px 12px;background:var(--soft);border-radius:10px;font-size:14px}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:5px 12px;font-size:14px;white-space:nowrap}
+.chip.on{background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.btn{background:var(--acc);color:var(--onacc);border:0;border-radius:10px;padding:9px 16px;font-weight:600;font-size:15px}
+.chips{display:flex;gap:8px;padding:12px 16px;overflow-x:auto}
+.stories{display:flex;gap:14px;padding:12px 16px;overflow-x:auto;background:var(--card);border-bottom:1px solid var(--line)}
+.sty{background:none;border:0;display:grid;justify-items:center;gap:4px;font-size:12px;color:var(--muted);padding:0}
+.rg{padding:3px;border-radius:50%;background:conic-gradient(var(--sun),var(--red),var(--sun))}.rg.seen{background:var(--line)}
+.rg .av{border:3px solid var(--card)}
+.empty{padding:40px 24px;text-align:center}.empty b{display:block;font-size:18px}
+.vs{height:calc(100svh - 150px);overflow-y:auto;scroll-snap-type:y mandatory}
+.vd{height:100%;scroll-snap-align:start;position:relative;display:grid;place-items:center;color:#fff;text-align:center;padding:24px}
+.vd h2{margin:0;font:600 26px/1.25 Unbounded,Onest,system-ui,sans-serif;text-shadow:0 2px 12px rgba(0,0,0,.35)}
+.vside{position:absolute;right:12px;bottom:90px;display:grid;gap:14px}
+.vside button{background:rgba(0,0,0,.4);border:0;border-radius:50%;width:50px;height:50px;color:#fff;font-size:20px;line-height:1.1}
+.vside small{display:block;font-size:11px}
+.vinfo{position:absolute;left:16px;right:84px;bottom:22px;text-align:left;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.np{margin:12px;padding:14px;background:var(--card);border:1px solid var(--line);border-radius:12px;display:grid;gap:8px}
+.bar{height:6px;border-radius:9px;background:var(--soft);overflow:hidden}.bar i{display:block;height:100%;background:var(--sun)}
+.cur{background:var(--soft)}
+.msg{max-width:78%;padding:8px 12px;border-radius:14px;background:var(--card);border:1px solid var(--line);margin:8px 12px}
+.msg.me{margin-left:auto;background:var(--acc);color:var(--onacc);border-color:var(--acc)}
+.cin{display:flex;gap:8px;padding:12px;background:var(--card)}
+.cin input,#sheet textarea{flex:1;min-width:0;width:100%;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.cover{height:110px;position:relative}.gear{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(0,0,0,.35);color:#fff;font-size:20px}
+.pf{padding:1px 16px 12px;background:var(--card)}.pf .av{margin-top:-36px;position:relative;border:4px solid var(--card)}
+.pf h2{margin:6px 0 0;font-size:20px}
+.stats{display:flex;gap:28px;margin-top:10px;color:var(--muted);font-size:14px}.stats b{display:block;font-size:18px;color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}.grid i{aspect-ratio:1}
+.line{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line)}
+.sw{width:46px;height:28px;border-radius:99px;border:0;background:var(--line);position:relative;flex:none}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .15s}
+.sw[aria-checked=true]{background:var(--acc)}.sw[aria-checked=true]::after{transform:translateX(18px)}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(480px,100%);display:flex;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px);z-index:6}
+nav a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0;font-size:12px;color:var(--muted);text-decoration:none}
+nav a.on{color:var(--acc);font-weight:600}nav svg{width:24px;height:24px;fill:currentColor}
+.fab{position:fixed;right:max(16px,calc(50% - 224px));bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:6;background:var(--sun);color:#16222E;border:0;border-radius:99px;padding:12px 18px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+#sheet{position:fixed;inset:0;background:rgba(10,18,26,.55);display:flex;align-items:flex-end;justify-content:center;z-index:20}
+.sh{background:var(--card);width:min(480px,100%);border-radius:18px 18px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));display:grid;gap:12px}
+.sh h3{margin:0}.end{display:flex;justify-content:flex-end;gap:8px}
+.stv{width:100%;height:100%;display:grid;place-content:center;gap:12px;text-align:center;color:#fff;padding:24px;cursor:pointer}
+.stv h2{margin:0;font:600 24px/1.3 Unbounded,Onest,system-ui,sans-serif}
+#toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;z-index:30;width:max-content;max-width:90%}
+@media (prefers-reduced-motion:reduce){.sw::after{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><svg class="lg" viewBox="24 32 490 136" role="img" aria-label="DVIR"><g transform="translate(30 36) scale(.25)"><rect width="512" height="512" rx="128" fill="#1F5FBF"/><path d="M167 150V362H239A106 106 0 0 0 239 150Z" fill="none" stroke="#fff" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"/><circle cx="250" cy="256" r="30" fill="#F5B800"/></g><g class="w" transform="translate(0 52)"><path d="M198 0V96H222A48 48 0 0 0 222 0Z"/><path d="M308 0L344 96L380 0"/><path d="M416 34V96"/><path d="M454 0V96M454 0H476A24 24 0 0 1 476 48H454M474 48L504 96"/></g><circle cx="416" cy="58" r="11" fill="#F5B800"/></svg><button class="chip" data-a="srch" aria-label="Пошук">Пошук</button></header>
+<main id="v"></main>
+</div>
+<nav aria-label="Розділи">
+<a href="#feed" data-r="feed"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Стрічка</a>
+<a href="#video" data-r="video"><svg viewBox="0 0 24 24"><path fill-rule="evenodd" d="M5 4h14a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm4 3v10l8-5z"/></svg>Відео</a>
+<a href="#music" data-r="music"><svg viewBox="0 0 24 24"><path d="M9 3v11.500A3.500 3.500 0 1 0 11 18V8h7V3z"/></svg>Музика</a>
+<a href="#chats" data-r="chats"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Чати</a>
+<a href="#me" data-r="me"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9c0-4 3.500-6 8-6s8 2 8 6z"/></svg>Профіль</a>
+</nav>
+<div id="sheet" hidden></div>
+<div id="toast" role="status" hidden></div>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const PPL={o:["Олена Коваль","#C8372D"],a:["Андрій Мельник","#1F5FBF"],m:["Марія Тарасенко","#2E8B57"],t:["Тарас Бойко","#8E5BB5"],i:["Ірина Власенко","#C26A12"],d:["Данило Шевчук","#16222E"],me:["Ви","#5C6B7A"]};
+const G=["linear-gradient(135deg,#F5B800,#C8372D)","linear-gradient(135deg,#1F5FBF,#5B9BF5)","linear-gradient(135deg,#2E8B57,#9AD9B0)","linear-gradient(135deg,#8E5BB5,#F2B5AE)","linear-gradient(135deg,#C26A12,#F5B800)","linear-gradient(135deg,#16222E,#1F5FBF)"];
+const GC=["#1F5FBF","#8E5BB5","#2E8B57","#C26A12","#C8372D"];
+const ON={o:1,a:0,t:1};
+const ST={me:"Тут з’явиться ваша історія на 24 години.",o:"Доброго ранку з Подолу!",a:"Новий білд гри вже в тестуванні.",t:"Прибирання берега, 10:00.",i:"Карпати, день третій.",m:"Борщ вийшов ідеальним."};
+const S={tab:"fr",friends:new Set(["o","a","t"]),follow:new Set(["i"]),liked:new Set(),vl:new Set(),open:new Set(),seen:new Set(),fts:"dm",pi:null,pp:false,t:0,status:null,pt:"wall",chrono:true,saver:false,pause:true,ver:false,chat:null,cur:"feed"};
+let N=100;S.name="";S.int=new Set();const IN=["Музика","Кіно","Подорожі","Спорт","Ігри","Кулінарія","Фото","Технології"];
+const POSTS=[
+{u:"o",t:"15 хв тому",x:"Ранок на Подолі. Книгарня відчинилась, кава вже готова.",g:0,l:124,k:18},
+{u:"a",t:"1 год тому",x:"Закінчили демо нашої гри. Дякую всім, хто тестував!",g:1,l:87,k:23},
+{u:"t",t:"3 год тому",x:"Субота на набережній: прибрали берег і спекли картоплю на вогнищі.",g:2,l:156,k:31},
+{u:"i",t:"5 год тому",x:"Нове фото з відпустки в Карпатах.",g:3,l:203,k:44},
+{u:"m",t:"6 год тому",x:"Домашній борщ із пампушками. Рецепт у коментарях.",g:4,l:318,k:92},
+{u:"d",t:"вчора",x:"Три поради для початківців у фотографії: світло, кут і терпіння.",g:5,l:75,k:12},
+{u:"o",t:"вчора",x:"Хтось слухає живу музику на вихідних? Підкажіть гурти.",g:-1,l:41,k:27}
+];
+POSTS.forEach((p,i)=>p.id=i);
+const V=[
+{h:"maria_kuhar",x:"Борщ за 60 секунд",c:"Домашній рецепт без зайвого",s:"Оригінальний звук, Марія",l:12400,k:310,g:4},
+{h:"danylo_foto",x:"3 поради для кращих кадрів",c:"Світло, кут, фон",s:"Кава на Подолі, Сонячна Хвиля",l:8300,k:142,g:5},
+{h:"taras_run",x:"Ранкова пробіжка набережною",c:"П’ять кілометрів до сніданку",s:"Дніпро тече, Хвилі й Береги",l:5100,k:76,g:2},
+{h:"iryna_travel",x:"Карпати за одну хвилину",c:"Маршрут у коментарях",s:"Карпатський вітер, Полонина",l:21700,k:508,g:3}
+];
+const T=[["Місто засинає","Нічні Трамваї","3:24",204],["Кава на Подолі","Сонячна Хвиля","2:58",178],["Карпатський вітер","Полонина","4:10",250],["Дзвінок із дитинства","Ранкові Птахи","3:02",182],["Дніпро тече","Хвилі й Береги","3:47",227]];
+const CH=[
+{k:"dm",n:"Олена Коваль",u:"o",m:[["o","Привіт! Ти будеш у суботу на обміні книжок?"]]},
+{k:"dm",n:"Андрій Мельник",u:"a",m:[["a","Скинув тобі збірку демо-ліній, глянь."]]},
+{k:"gr",n:"Університетські друзі",u:"t",c:"#8E5BB5",m:[["t","Хто йде на вихідних у похід?"],["i","Я за!"]]},
+{k:"gr",n:"Команда гри",u:"a",c:"#1F5FBF",m:[["a","Реліз у п’ятницю, не забудьте протестувати."]]},
+{k:"ch",n:"Новини технологій",s:"12,5 тис.",c:"#2E8B57",m:[["ch","Вийшло оновлення популярного редактора коду. Що нового."]]},
+{k:"ch",n:"Кіно та серіали",s:"8,2 тис.",c:"#C26A12",m:[["ch","Добірка українських фільмів на вихідні."]]}
+];
+const WALL=[{u:"o",t:"2 год тому",x:"З наступаючим днем народження! Торт за мною."},{u:"a",t:"вчора",x:"Додав фото з минулого походу в альбом «Друзі»."}];
+
+const fm=s=>Math.floor(s/60)+":"+String(s%60).padStart(2,"0");
+const fk=n=>n>=1000?(n/1000).toFixed(1).replace(".",",")+" тис.":n;
+const av=(k,s=40)=>`<span class="av" style="--c:${PPL[k][1]};width:${s}px;height:${s}px;font-size:${s*.42}px">${PPL[k][0][0]}</span>`;
+const cav=(c,s)=>c.k=="dm"?av(c.u,s):`<span class="av sq" style="--c:${c.c};width:${s}px;height:${s}px">${c.n[0]}</span>`;
+const H=(t,s)=>`<div class="hd"><h1>${t}</h1>${s?`<p class="mut">${s}</p>`:""}</div>`;
+const empty=(a,b,c)=>`<div class="empty"><b>${a}</b><span class="mut">${b}</span>${c?`<div style="margin-top:14px"><button class="btn" data-a="srch">${c}</button></div>`:""}</div>`;
+const tabs=(cur,l,a)=>`<div class="tabs">${l.map(x=>`<button class="${cur==x[0]?"on":""}" data-a="${a}" data-i="${x[0]}">${x[1]}</button>`).join("")}</div>`;
+
+const post=p=>{const L=S.liked.has(p.id);return `<article class="post"><div class="row">${av(p.u)}<div class="grow"><b>${PPL[p.u][0]}</b><div class="mut">${p.t}</div></div>${p.u!="me"&&!S.follow.has(p.u)&&!S.friends.has(p.u)?`<button class="chip" data-a="fol" data-i="${p.u}">Стежити</button>`:""}</div><p>${esc(p.x)}</p>${p.g>=0?`<div class="pic" style="background:${G[p.g]}"></div>`:""}<div class="acts"><button data-a="like" data-i="${p.id}" class="${L?"on":""}" aria-pressed="${L}">${L?"♥":"♡"} ${p.l+(L?1:0)}</button><button data-a="cm" data-i="${p.id}">Коментарі ${p.k}</button><button data-a="shr">Поділитись</button></div>${S.open.has(p.id)?`<div class="cm"><b>Марія:</b> Супер!<br><b>Андрій:</b> Дуже круто, дякую, що поділились.</div>`:""}</article>`};
+
+function feed(){
+ const ps=POSTS.filter(p=>S.tab=="fr"?S.friends.has(p.u)||p.u=="me":S.tab=="sub"?S.follow.has(p.u):!S.friends.has(p.u)&&!S.follow.has(p.u)&&p.u!="me");
+ const st=["me","o","a","t","i","m"].map(u=>`<button class="sty" data-a="story" data-i="${u}"><span class="rg ${S.seen.has(u)?"seen":""}">${av(u,56)}</span>${u=="me"?"Ваша":PPL[u][0].split(" ")[0]}</button>`).join("");
+ return `<div class="stories">${st}</div>`+tabs(S.tab,[["fr","Друзі"],["sub","Підписки"],["rec","Рекомендації"]],"tab")+(ps.map(post).join("")||empty("Тут поки тихо","Додайте друзів або підпишіться на цікавих людей.","Знайти людей"))+`<button class="fab" data-a="new">Новий допис</button>`;
+}
+function video(){
+ return `<div class="vs">`+V.map((v,i)=>{const L=S.vl.has(i);return `<section class="vd" style="background:${G[v.g]}"><h2>${v.x}</h2><div class="vside"><button data-a="vlike" data-i="${i}" aria-label="Вподобати">${L?"♥":"♡"}<small>${fk(v.l+(L?1:0))}</small></button><button data-a="cm0" aria-label="Коментарі">…<small>${v.k}</small></button><button data-a="shr" aria-label="Поділитись">↗</button></div><div class="vinfo"><b>@${v.h}</b><div>${v.c}</div><small>♪ ${v.s}</small></div></section>`}).join("")+`</div>`;
+}
+function music(){
+ const c=S.pi!=null?T[S.pi]:null;
+ return H("Музика","Ваші аудіо та добірки.")+(c?`<div class="np"><div class="row"><button class="btn" data-a="pp" aria-label="${S.pp?"Пауза":"Грати"}">${S.pp?"❚❚":"▶"}</button><div class="grow"><b>${c[0]}</b><div class="mut">${c[1]}</div></div><button class="chip ${S.status==S.pi?"on":""}" data-a="stat">${S.status==S.pi?"У статусі":"У статус"}</button></div><div class="bar"><i id="pg" style="width:${S.t/c[3]*100}%"></i></div><div class="mut" id="tm">${fm(S.t)} / ${c[2]}</div></div>`:"")+T.map((t,i)=>`<button class="rw ${S.pi==i?"cur":""}" data-a="play" data-i="${i}"><span class="av sq" style="--c:${GC[i]};width:44px;height:44px">${S.pi==i&&S.pp?"❚❚":"▶"}</span><div class="grow"><b>${t[0]}</b><div class="mut">${t[1]}</div></div><span class="mut">${t[2]}</span></button>`).join("");
+}
+const msg=(m,c)=>{const me=m[0]=="me";return `<div class="msg ${me?"me":""}">${c.k=="gr"&&!me?`<small class="mut">${PPL[m[0]][0]}</small><br>`:""}${m[1]?esc(m[1]):`▶ ▂▅▃▇▄▆▂ 0:${String(m[2]).padStart(2,"0")}`}</div>`};
+function chats(){
+ if(S.chat!=null){const c=CH[S.chat];return `<div class="rw">${`<button class="chip" data-a="back">Назад</button>`}${cav(c,36)}<div class="grow"><b>${c.n}</b>${c.k=="ch"?`<div class="mut">${c.s} підписників</div>`:""}</div></div>`+c.m.map(m=>msg(m,c)).join("")+(c.k=="ch"?`<p class="mut" style="text-align:center">У каналі пишуть лише автори.</p>`:`<div class="cin"><input id="ci" placeholder="Напишіть повідомлення" aria-label="Повідомлення"><button class="chip" data-a="voice">Голос</button><button class="btn" data-a="send">Надіслати</button></div>`)}
+ return H("Чати")+tabs(S.fts,[["dm","Особисті"],["gr","Групи"],["ch","Канали"]],"fts")+CH.map((c,i)=>c.k!=S.fts?"":`<button class="rw" data-a="open" data-i="${i}">${cav(c,44)}<div class="grow"><b>${c.n}</b><div class="mut" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.m[c.m.length-1][1]||"Голосове повідомлення")}</div></div></button>`).join("");
+}
+function me(){
+ const s=S.status!=null?T[S.status]:null;
+ const sw=(k,t,d)=>`<div class="line"><div><b>${t}</b><div class="mut">${d}</div></div><button class="sw" role="switch" aria-checked="${S[k]}" aria-label="${t}" data-a="sw" data-i="${k}"></button></div>`;
+ let b;
+ if(S.pt=="wall")b=`<div class="cin"><input id="wi" placeholder="Напишіть на стіні" aria-label="Запис на стіні"><button class="btn" data-a="wpost">Надіслати</button></div>`+WALL.map(w=>`<div class="post"><div class="row">${av(w.u,36)}<div class="grow"><b>${PPL[w.u][0]}</b><div class="mut">${w.t}</div></div></div><p>${esc(w.x)}</p></div>`).join("");
+ else if(S.pt=="ph")b=`<div class="chips"><span class="chip">Подорожі</span><span class="chip">Київ</span><span class="chip">Друзі</span></div><div class="grid">${[...G,...G].map(g=>`<i style="background:${g}"></i>`).join("")}</div>`;
+ else if(S.pt=="fr")b=[...S.friends].map(u=>`<div class="rw">${av(u)}<div class="grow"><b>${PPL[u][0]}</b><div class="mut">${ON[u]?`<span style="color:var(--grn)">●</span> онлайн`:"був(ла) нещодавно"}</div></div><button class="chip" data-a="dm" data-i="${u}">Написати</button></div>`).join("");
+ else b=`<div class="rw"><button class="chip" data-a="pt" data-i="wall">Назад</button><b>Налаштування</b></div>`+sw("chrono","Хронологічна стрічка","Пости у порядку публікації, без алгоритмів.")+sw("saver","Економія трафіку","Стиснуті фото, відео без автозапуску.")+sw("pause","Нагадувати про перерву","Мʼяке повідомлення після 30 хвилин.")+sw("ver","Підтвердити через Дію","Мітка довіри біля імені. Необов’язково.");
+ return `<div class="cover" style="background:${G[1]}"><button class="gear" data-a="pt" data-i="set" aria-label="Налаштування">⚙︎</button></div><section class="pf">${av("me",72)}<h2>${esc(S.name||"Ваш профіль")}${S.ver?" ✓":""}</h2><div class="mut">@you</div><div style="margin:6px 0">${s?`♪ ${s[1]}, ${s[0]}`:`<span class="mut">Оберіть трек у «Музиці», щоб показати його в статусі.</span>`}</div>${S.int.size?`<div class="chips" style="padding:4px 0 8px;flex-wrap:wrap">${[...S.int].map(x=>`<span class="chip">${x}</span>`).join("")}</div>`:""}<div class="stats"><div><b>${S.friends.size}</b>друзів</div><div><b>128</b>підписників</div><div><b>${POSTS.filter(p=>p.u=="me").length}</b>дописів</div></div></section>`+(S.pt=="set"?"":tabs(S.pt,[["wall","Стіна"],["ph","Фото"],["fr","Друзі"]],"pt"))+b;
+}
+const R={feed,video,music,chats,me};
+function go(){
+ const old=$("#ci")?$("#ci").value:"";
+ let h=location.hash.slice(1);if(!R[h])h="feed";
+ if(h!=S.cur)S.chat=null;
+ S.cur=h;
+ $("#v").innerHTML=R[h]();
+ document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.dataset.r==h));
+ if(h=="chats"&&S.chat!=null&&$("#ci")){const i=$("#ci");i.value=old;i.focus({preventScroll:true});scrollTo(0,document.body.scrollHeight)}
+}
+let tt;function toast(t){const e=$("#toast");e.textContent=t;e.hidden=false;clearTimeout(tt);tt=setTimeout(()=>e.hidden=true,2400)}
+function close(){$("#sheet").hidden=true;$("#sheet").innerHTML=""}
+function sheet(){
+ const s=$("#sheet");s.hidden=false;
+ s.innerHTML=`<div class="sh" role="dialog" aria-modal="true" aria-label="Новий допис"><h3>Новий допис</h3><textarea id="sx" rows="4" placeholder="Чим хочете поділитися?"></textarea><div class="end"><button class="chip" data-a="close">Скасувати</button><button class="btn" data-a="pub">Опублікувати</button></div></div>`;
+ $("#sx").focus();
+}
+function story(u){
+ const s=$("#sheet");s.hidden=false;const gi=["me","o","a","t","i","m"].indexOf(u);
+ s.innerHTML=`<div class="stv" data-a="close" style="background:${G[gi%6]}"><b>${PPL[u][0]}</b><h2>${ST[u]}</h2><small>Торкніться, щоб закрити</small></div>`;
+}
+function pub(){
+ const x=$("#sx").value.trim();
+ if(!x){toast("Напишіть текст перед публікацією");return}
+ POSTS.unshift({id:++N,u:"me",t:"щойно",x,g:-1,l:0,k:0});S.tab="fr";close();go();toast("Опубліковано");
+}
+function send(voice){
+ const c=CH[S.chat];
+ if(voice){c.m.push(["me","",3+Math.floor(Math.random()*9)])}
+ else{const t=$("#ci").value.trim();if(!t)return;c.m.push(["me",t]);$("#ci").value=""}
+ go();const k=S.chat;
+ setTimeout(()=>{CH[k].m.push([CH[k].u,"Дякую! Відповім трохи згодом."]);if(S.chat==k&&S.cur=="chats")go()},1200);
+}
+document.addEventListener("click",e=>{
+ if(e.target.id=="sheet"){if(!S.ob)close();return}
+ const b=e.target.closest("[data-a]");if(!b)return;
+ const a=b.dataset.a,i=b.dataset.i;
+ if(a=="like"){S.liked.has(+i)?S.liked.delete(+i):S.liked.add(+i)}
+ else if(a=="cm"){S.open.has(+i)?S.open.delete(+i):S.open.add(+i)}
+ else if(a=="shr"){toast("Посилання скопійовано");return}
+ else if(a=="cm0"){toast("Тут відкриються коментарі");return}
+ else if(a=="fol"){S.follow.add(i);toast("Ви стежите за: "+PPL[i][0]);if(S.ob)onb();else if($("#sq"))res($("#sq").value)}
+ else if(a=="tab"){S.tab=i}
+ else if(a=="story"){S.seen.add(i);story(i);go();return}
+ else if(a=="vlike"){S.vl.has(+i)?S.vl.delete(+i):S.vl.add(+i);const y=$(".vs").scrollTop;go();$(".vs").scrollTop=y;return}
+ else if(a=="play"){if(S.pi==+i)S.pp=!S.pp;else{S.pi=+i;S.t=0;S.pp=true}}
+ else if(a=="pp"){S.pp=!S.pp}
+ else if(a=="stat"){S.status=S.status==S.pi?null:S.pi;toast(S.status==null?"Трек прибрано зі статусу":"Трек у вашому статусі")}
+ else if(a=="fts"){S.fts=i}
+ else if(a=="open"){S.chat=+i}
+ else if(a=="back"){S.chat=null}
+ else if(a=="dm"){const j=CH.findIndex(c=>c.k=="dm"&&c.u==i);if(j<0){toast("Чат поки не створено");return}S.cur="chats";S.chat=j;S.fts="dm";if(location.hash=="#chats")go();else location.hash="chats";return}
+ else if(a=="send"){send();return}
+ else if(a=="voice"){send(true);return}
+ else if(a=="pt"){S.pt=i}
+ else if(a=="wpost"){const t=$("#wi").value.trim();if(!t)return;WALL.unshift({u:"me",t:"щойно",x:t})}
+ else if(a=="sw"){S[i]=!S[i]}
+ else if(a=="new"){sheet();return}
+ else if(a=="srch"){search();return}
+ else if(a=="sp"){S.pi=+i;S.t=0;S.pp=true;close();if(location.hash=="#music")go();else location.hash="music";return}
+ else if(a=="sc"){close();S.cur="chats";S.chat=+i;S.fts=CH[+i].k;if(location.hash=="#chats")go();else location.hash="chats";return}
+ else if(a=="int"){S.int.has(i)?S.int.delete(i):S.int.add(i);onb();return}
+ else if(a=="onx"){if(S.ob==1)S.name=($("#nm").value||"").trim();if(S.ob==3){S.ob=0;close();go();toast("Вітаємо у «Дворі»!");return}S.ob++;onb();return}
+ else if(a=="onskip"){S.ob=0;close();go();return}
+ else if(a=="close"){close();return}
+ else if(a=="pub"){pub();return}
+ go();
+});
+document.addEventListener("keydown",e=>{if(e.key=="Enter"&&e.target.id=="ci")send();if(e.key=="Escape"&&!S.ob)close()});
+document.addEventListener("input",e=>{if(e.target.id=="sq")res(e.target.value)});
+function search(){const s=$("#sheet");s.hidden=false;s.innerHTML=`<div class="sh" role="dialog" aria-modal="true" aria-label="Пошук"><input id="sq" placeholder="Люди, музика, групи, канали" aria-label="Пошук" autocomplete="off"><div class="sr" id="sr"></div><div class="end"><button class="chip" data-a="close">Закрити</button></div></div>`;res("");$("#sq").focus()}
+function res(q){
+ q=q.trim().toLowerCase();const r=$("#sr");
+ if(!q){r.innerHTML=`<p class="mut" style="padding:0 16px">Почніть вводити ім’я, назву треку, групи або каналу.</p>`;return}
+ const has=x=>x.toLowerCase().includes(q);
+ const P=Object.keys(PPL).filter(k=>k!="me"&&has(PPL[k][0])).map(u=>`<div class="rw">${av(u)}<div class="grow"><b>${PPL[u][0]}</b><div class="mut">${S.friends.has(u)?"У друзях":S.follow.has(u)?"Ви стежите":"Людина"}</div></div>${S.friends.has(u)||S.follow.has(u)?"":`<button class="chip" data-a="fol" data-i="${u}">Стежити</button>`}</div>`);
+ const M=T.map((t,i)=>has(t[0]+" "+t[1])?`<button class="rw" data-a="sp" data-i="${i}"><span class="av sq" style="--c:${GC[i]};width:44px;height:44px">▶</span><div class="grow"><b>${t[0]}</b><div class="mut">${t[1]}</div></div></button>`:"");
+ const C=CH.map((c,i)=>has(c.n)?`<button class="rw" data-a="sc" data-i="${i}">${cav(c,44)}<div class="grow"><b>${c.n}</b><div class="mut">${{dm:"Чат",gr:"Група",ch:"Канал"}[c.k]}</div></div></button>`:"");
+ r.innerHTML=[...P,...M,...C].join("")||empty("Нічого не знайдено","Спробуйте інше слово або перевірте написання.");
+}
+function onb(){
+ const s=$("#sheet");s.hidden=false;let b;
+ if(S.ob==1)b=`<svg width="56" height="56" viewBox="0 0 512 512" aria-hidden="true"><rect width="512" height="512" rx="128" fill="#1F5FBF"/><path d="M167 150V362H239A106 106 0 0 0 239 150Z" fill="none" stroke="#fff" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"/><circle cx="250" cy="256" r="30" fill="#F5B800"/></svg><h3>Ласкаво просимо до «Двору»</h3><p class="mut" style="margin:0">Як вас звати? Так вас бачитимуть друзі.</p><input id="nm" placeholder="Ім’я та прізвище" value="${esc(S.name)}">`;
+ else if(S.ob==2)b=`<h3>Що вам цікаво?</h3><p class="mut" style="margin:0">Оберіть кілька тем, і стрічка одразу буде живою.</p><div class="chips" style="flex-wrap:wrap;padding:0">${IN.map(x=>`<button class="chip ${S.int.has(x)?"on":""}" data-a="int" data-i="${x}">${x}</button>`).join("")}</div>`;
+ else b=`<h3>Знайдіть цікавих людей</h3><p class="mut" style="margin:0">Підпишіться на кількох, щоб стрічка не була порожньою.</p><div class="sr">${["m","d","i"].map(u=>`<div class="rw">${av(u)}<div class="grow"><b>${PPL[u][0]}</b></div><button class="chip ${S.follow.has(u)?"on":""}" data-a="fol" data-i="${u}">${S.follow.has(u)?"Ви стежите":"Стежити"}</button></div>`).join("")}</div>`;
+ s.innerHTML=`<div class="sh" role="dialog" aria-modal="true" aria-label="Знайомство"><div class="mut">Крок ${S.ob} із 3</div>${b}<div class="end"><button class="chip" data-a="onskip">Пропустити</button><button class="btn" data-a="onx">${S.ob==3?"Готово":"Далі"}</button></div></div>`;
+ if(S.ob==1)$("#nm").focus();
+}
+setInterval(()=>{
+ if(!S.pp)return;const c=T[S.pi];S.t++;
+ if(S.t>=c[3]){S.pi=(S.pi+1)%T.length;S.t=0;if(S.cur=="music")go();return}
+ const p=$("#pg");if(p){p.style.width=S.t/c[3]*100+"%";$("#tm").textContent=fm(S.t)+" / "+c[2]}
+},1000);
+addEventListener("hashchange",go);S.ob=1;onb();
+go();
+</script>
+</body>
+</html>
