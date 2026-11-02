@@ -85,7 +85,21 @@ nav a.on{color:var(--acc);font-weight:600}nav svg{width:24px;height:24px;fill:cu
 #toast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 14px;border-radius:10px;font-size:14px;z-index:30;width:max-content;max-width:90%}
 @media (prefers-reduced-motion:reduce){.sw::after{transition:none}}
 </style>
-</head>
+<style>
+.bl{filter:blur(22px);pointer-events:none;user-select:none}
+.b18{position:relative;overflow:hidden;border-radius:10px}
+.rv{position:absolute;inset:0;border:0;background:rgba(0,0,0,.45);color:#fff;font-weight:600;display:grid;place-content:center;gap:4px;text-align:center}
+.rv small{font-weight:400}
+.tag{font-size:12px;font-weight:600;padding:1px 6px;border-radius:5px;background:var(--red);color:#fff;margin-left:6px}
+.att{display:flex;gap:8px;align-items:center;padding:8px 12px;background:var(--soft);border-radius:10px;margin:8px 0;font-size:14px}
+.rx{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap}
+.cov{width:56px;height:56px;border-radius:12px;flex:none}
+input[type=range]{width:100%;accent-color:var(--sun)}
+.mn,.post a{color:var(--acc)}
+#sheet input[type=checkbox]{width:auto;margin-right:6px}
+#sheet select,#sheet textarea{width:100%;padding:10px 12px}
+</style>
+<style>.chbg{min-height:calc(100vh - 150px)}</style></head>
 <body>
 <div class="app">
 <header><svg class="lg" viewBox="24 32 490 136" role="img" aria-label="DVIR"><g transform="translate(30 36) scale(.25)"><rect width="512" height="512" rx="128" fill="#1F5FBF"/><path d="M167 150V362H239A106 106 0 0 0 239 150Z" fill="none" stroke="#fff" stroke-width="56" stroke-linecap="round" stroke-linejoin="round"/><circle cx="250" cy="256" r="30" fill="#F5B800"/></g><g class="w" transform="translate(0 52)"><path d="M198 0V96H222A48 48 0 0 0 222 0Z"/><path d="M308 0L344 96L380 0"/><path d="M416 34V96"/><path d="M454 0V96M454 0H476A24 24 0 0 1 476 48H454M474 48L504 96"/></g><circle cx="416" cy="58" r="11" fill="#F5B800"/></svg><button class="chip" data-a="srch" aria-label="Пошук">Пошук</button></header>
@@ -103,7 +117,7 @@ nav a.on{color:var(--acc);font-weight:600}nav svg{width:24px;height:24px;fill:cu
 <script>
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const PPL={o:["Олена Коваль","#C8372D"],a:["Андрій Мельник","#1F5FBF"],m:["Марія Тарасенко","#2E8B57"],t:["Тарас Бойко","#8E5BB5"],i:["Ірина Власенко","#C26A12"],d:["Данило Шевчук","#16222E"],me:["Ви","#5C6B7A"]};
+const PPL={o:["Вадим Давиденко","#C8372D"],a:["Андрій Мельник","#1F5FBF"],m:["Марія Тарасенко","#2E8B57"],t:["Тарас Бойко","#8E5BB5"],i:["Ірина Власенко","#C26A12"],d:["Данило Шевчук","#16222E"],me:["Ви","#5C6B7A"]};
 const G=["linear-gradient(135deg,#F5B800,#C8372D)","linear-gradient(135deg,#1F5FBF,#5B9BF5)","linear-gradient(135deg,#2E8B57,#9AD9B0)","linear-gradient(135deg,#8E5BB5,#F2B5AE)","linear-gradient(135deg,#C26A12,#F5B800)","linear-gradient(135deg,#16222E,#1F5FBF)"];
 const GC=["#1F5FBF","#8E5BB5","#2E8B57","#C26A12","#C8372D"];
 const ON={o:1,a:0,t:1};
@@ -128,7 +142,7 @@ const V=[
 ];
 const T=[["Місто засинає","Нічні Трамваї","3:24",204],["Кава на Подолі","Сонячна Хвиля","2:58",178],["Карпатський вітер","Полонина","4:10",250],["Дзвінок із дитинства","Ранкові Птахи","3:02",182],["Дніпро тече","Хвилі й Береги","3:47",227]];
 const CH=[
-{k:"dm",n:"Олена Коваль",u:"o",m:[["o","Привіт! Ти будеш у суботу на обміні книжок?"]]},
+{k:"dm",n:"Вадим Давиденко",u:"o",m:[["o","Привіт! Ти будеш у суботу на обміні книжок?"]]},
 {k:"dm",n:"Андрій Мельник",u:"a",m:[["a","Скинув тобі збірку демо-ліній, глянь."]]},
 {k:"gr",n:"Університетські друзі",u:"t",c:"#8E5BB5",m:[["t","Хто йде на вихідних у похід?"],["i","Я за!"]]},
 {k:"gr",n:"Команда гри",u:"a",c:"#1F5FBF",m:[["a","Реліз у п’ятницю, не забудьте протестувати."]]},
@@ -268,6 +282,199 @@ setInterval(()=>{
  const p=$("#pg");if(p){p.style.width=S.t/c[3]*100+"%";$("#tm").textContent=fm(S.t)+" / "+c[2]}
 },1000);
 addEventListener("hashchange",go);S.ob=1;onb();
+go();
+</script>
+<script>
+Object.assign(S,{show18:false,rev:new Set(),rx:new Set(),hid:new Set(),q:"",mt:"all",ci:null,ct:0,on:false,rep:false,shuf:false,arts:new Set(["Нічні Трамваї"]),bio:"Люблю музику, каву й добрі історії ☕🎧\nМій проєкт: https://example.com\nДружу з @vadym",lbl:new Set(["Музикант"]),lf:null,ed:null});
+const ALB=["Нічне місто","Літо у дворі","Полонина","Дитинство","Річка"],GN=["Інді","Поп","Фолк","Ембієнт","Рок"];
+T.forEach((t,i)=>{t[4]=ALB[i];t[5]=GN[i]});
+const LB=["Блогер","Музикант","Контент-креатор","Актор","Фотограф","Відеограф","Дизайнер","Стрімер"];
+const PLB={o:["Фотограф","Блогер"],a:["Дизайнер","Стрімер"],t:["Музикант"],i:["Відеограф","Контент-креатор"],m:["Блогер"],d:["Фотограф","Актор"]};
+const PLS=[{n:"Ранкова кава",by:"me",tr:[1,3]},{n:"Для всіх нас",by:"me",tr:[0,2],co:1,ed:["o","a"]},{n:"Подорожній мікс",by:"o",tr:[2,4],sv:0}];
+POSTS.push(
+{id:++N,u:"t",t:"2 дні тому",x:"Розбір найжорстокіших сцен у фільмах жахів. Лише для дорослих.",g:3,a:1,l:34,k:5},
+{id:++N,u:"d",t:"2 дні тому",x:"Нічна фотоісторія без цензури.",g:5,a:1,l:21,k:3},
+{id:++N,u:"a",t:"2 дні тому",x:"Збираємо команду для спільного проєкту про музику й відео. Пишіть! #колаб #музика",g:-1,l:19,k:4}
+);
+let CA=[];const PRIVU=new Set(["d"]);Object.assign(S,{blk:new Set(),rst:new Set(),req:new Set()});
+const lk=s=>esc(s).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1" target="_blank" rel="noopener">$1</a>').replace(/(^|\s)@(\w+)/g,'$1<b class="mn">@$2</b>');
+const att=a=>a.k=="img"?`<img src="${a.src}" alt="" style="width:100%;border-radius:10px;margin:8px 0">`:a.k=="mus"?`<div class="att">♪ <b>${esc(T[a.i][0])}</b>, ${esc(T[a.i][1])}<button class="chip" style="margin-left:auto" data-a="pl2" data-i="${a.i}">Слухати</button></div>`:`<div class="att">${a.k=="vid"?"Відео":"Файл"}: ${esc(a.n)}</div>`;
+const rxb=p=>["❤️","👍","🔥"].map((e,j)=>{const on=S.rx.has(p.id+e);return `<button class="chip ${on?"on":""}" data-a="rx" data-i="${p.id}" data-e="${e}">${e} ${[p.l,p.l>>2,p.l>>3][j]+(on?1:0)}</button>`}).join("");
+const cmb=p=>{const l=p.cm||[["m","Супер!"],["a","Дуже круто, дякую, що поділились."]];return `<div class="cm">${l.map(c=>`<b>${PPL[c[0]][0].split(" ")[0]}:</b> ${esc(c[1])}`).join("<br>")}<div class="cin" style="padding:8px 0 0"><input id="cmi" placeholder="Ваш коментар" aria-label="Коментар"><button class="btn" data-a="cms" data-i="${p.id}">Ок</button></div></div>`};
+const p2=p=>{
+ const lock=p.a&&!S.rev.has(p.id);
+ return `<article class="post"><div class="row">${av(p.u)}<div class="grow"><b>${PPL[p.u][0]}${p.ca?" і "+p.ca.map(c=>PPL[c][0].split(" ")[0]).join(", "):""}</b>${p.a?'<span class="tag">18+</span>':""}<div class="mut">${p.via?"Репост від "+PPL[p.via][0]+", ":""}${p.t}${p.v&&p.v!="Усі"?", "+p.v:""}</div></div>${p.u!="me"&&!S.follow.has(p.u)&&!S.friends.has(p.u)?`<button class="chip" data-a="fol" data-i="${p.u}">Стежити</button>`:""}<button class="chip" data-a="pm" data-i="${p.id}" aria-label="Меню публікації">⋯</button></div><div class="b18"><div class="${lock?"bl":""}">${p.x?`<p>${lk(p.x)}</p>`:""}${p.g>=0?`<div class="pic" style="background:${G[p.g]}"></div>`:""}${(p.at||[]).map(att).join("")}${p.cap?`<div class="mut">${esc(p.cap)}</div>`:""}</div>${lock?`<button class="rv" data-a="rev" data-i="${p.id}">Контент 18+<small>Торкніться, щоб показати</small></button>`:""}</div><div class="rx">${rxb(p)}</div><div class="acts"><button data-a="cm" data-i="${p.id}">Коментарі ${p.cm?p.cm.length:p.k}</button><button data-a="rsh" data-i="${p.id}">Поділитись на стіні</button></div>${S.open.has(p.id)?cmb(p):""}</article>`;
+};
+function feed2(){
+ const ok=p=>!S.hid.has(p.id)&&(p.u=="me"||S.show18||!p.a);
+ const ps=POSTS.filter(p=>ok(p)&&(S.tab=="fr"?S.friends.has(p.u)||p.u=="me":S.tab=="sub"?S.follow.has(p.u):!S.friends.has(p.u)&&!S.follow.has(p.u)&&p.u!="me"));
+ const st=["me","o","a","t","i","m"].map(u=>`<button class="sty" data-a="story" data-i="${u}"><span class="rg ${S.seen.has(u)?"seen":""}">${av(u,56)}</span>${u=="me"?"Ваша":PPL[u][0].split(" ")[0]}</button>`).join("");
+ const rc=S.tab=="rec"?`<div class="chips">${Object.keys(PLB).filter(u=>!S.friends.has(u)&&!S.follow.has(u)&&!PRIVU.has(u)).map(u=>`<button class="chip" data-a="fol" data-i="${u}">${PPL[u][0].split(" ")[0]}, ${PLB[u][0]} +</button>`).join("")}</div>`:"";
+ return `<div class="stories">${st}</div>`+tabs(S.tab,[["fr","Друзі"],["sub","Підписки"],["rec","Рекомендації"]],"tab")+rc+(ps.map(p2).join("")||empty("Тут поки тихо","Додайте друзів або підпишіться на цікавих людей.","Знайти людей"))+`<button class="fab" data-a="new">Новий допис</button>`;
+}
+const trk=([t,i])=>`<div class="rw" style="gap:10px"><button class="av sq" data-a="pl2" data-i="${i}" aria-label="Грати" style="--c:${GC[i%5]};width:44px;height:44px;border:0">${S.ci==i&&S.on?"❚❚":"▶"}</button><div class="grow"><b>${esc(t[0])}</b><div class="mut">${esc(t[1])}, ${esc(t[4])}, ${esc(t[5])}</div></div><button class="chip" data-a="addpl" data-i="${i}" aria-label="У плейлист">+</button></div>`;
+const tl=()=>{const q=(S.q||"").trim().toLowerCase();return T.map((t,i)=>[t,i]).filter(([t])=>!q||[t[0],t[1],t[4],t[5]].join(" ").toLowerCase().includes(q)).map(trk).join("")||empty("Нічого не знайдено","Спробуйте назву, виконавця, альбом чи жанр.")};
+function music2(){
+ const c=S.ci!=null?T[S.ci]:null;let b;
+ if(S.mt=="all")b=`<div class="cin"><input id="mq" value="${esc(S.q)}" placeholder="Назва, виконавець, альбом, жанр" aria-label="Пошук музики"><label class="chip" style="align-self:center">Завантажити<input id="up" type="file" accept=".mp3,.wav,audio/mpeg,audio/wav" multiple hidden></label></div><div id="tl">${tl()}</div>`;
+ else if(S.mt=="pl")b=`<div class="chips"><button class="btn" data-a="newpl">Створити плейлист</button></div>`+PLS.map((p,i)=>`<div class="post"><b>${esc(p.n)}</b>${p.co?'<span class="tag" style="background:var(--acc)">Спільний</span>':""}<div class="mut">${p.tr.length} треків, ${p.by=="me"?"ваш":PPL[p.by][0]}${p.ed?", редагують: "+p.ed.map(u=>PPL[u][0].split(" ")[0]).join(", "):""}</div><div class="chips" style="padding:8px 0 0"><button class="chip" data-a="plp" data-i="${i}">Слухати</button><button class="chip" data-a="pls" data-i="${i}">Поділитись</button>${p.by=="me"?`<button class="chip ${p.co?"on":""}" data-a="plc" data-i="${i}">Спільний</button>`:`<button class="chip ${p.sv?"on":""}" data-a="plv" data-i="${i}">${p.sv?"Збережено":"Зберегти"}</button>`}</div></div>`).join("");
+ else b=[...new Set(T.map(t=>t[1]))].map(a=>`<div class="rw" style="gap:10px"><span class="av sq" style="--c:${GC[a.length%5]};width:44px;height:44px">${esc(a[0])}</span><div class="grow"><b>${esc(a)}</b><div class="mut">${T.filter(t=>t[1]==a).length} треків</div></div><button class="chip ${S.arts.has(a)?"on":""}" data-a="af" data-i="${esc(a)}">${S.arts.has(a)?"Ви стежите":"Стежити"}</button></div>`).join("");
+ const pc=c?`<div class="np"><div class="row"><div class="cov" style="background:${G[S.ci%6]}"></div><div class="grow"><b>${esc(c[0])}</b><div class="mut">${esc(c[1])}</div></div></div><input id="sk" type="range" min="0" max="${c[3]}" value="${S.ct}" aria-label="Перемотування"><div class="mut" id="tm">${fm(S.ct)} / ${c[2]}</div><div class="row" style="justify-content:space-between"><button class="chip ${S.shuf?"on":""}" data-a="shf">Шафл</button><button class="chip" data-a="prv" aria-label="Попередній">⏮</button><button class="btn" data-a="pp2" aria-label="${S.on?"Пауза":"Грати"}">${S.on?"❚❚":"▶"}</button><button class="chip" data-a="nxt" aria-label="Наступний">⏭</button><button class="chip ${S.rep?"on":""}" data-a="rep">Повтор</button></div><div class="chips" style="padding:0"><button class="chip" data-a="addpl" data-i="${S.ci}">У плейлист</button><button class="chip" data-a="tochat">У чат</button><button class="chip" data-a="towall">На стіну</button></div></div>`:"";
+ return H("Музика","Слухайте, завантажуйте та діліться.")+pc+tabs(S.mt,[["all","Усі треки"],["pl","Плейлисти"],["ar","Виконавці"]],"mt")+b;
+}
+const row18=`<div class="line"><div><b>Показувати контент 18+</b><div class="mut">Вимкнено за замовчуванням: такі публікації не потрапляють у стрічку, рекомендації й пошук.</div></div><button class="sw" role="switch" aria-checked="${S.show18}" aria-label="Показувати контент 18+" data-a="sw" data-i="show18"></button></div>`;
+const _me=R.me;
+R.me=()=>{
+ let h=_me();
+ const bio=`<div class="mut">@you</div>${S.lbl.size?`<div class="chips" style="padding:6px 0 0;flex-wrap:wrap">${[...S.lbl].map(x=>`<span class="chip">${x}</span>`).join("")}</div>`:""}<p style="white-space:pre-line;margin:8px 0">${lk(S.bio)}</p><button class="chip" data-a="editpf">Редагувати профіль</button>`;
+ h=h.replace('<div class="mut">@you</div>',()=>bio);
+ if(S.pt=="wall")h=h.replace('<div class="post">',()=>POSTS.filter(p=>p.u=="me").map(p2).join("")+'<div class="post">');
+ if(S.pt=="set")h=h.replace("<b>Налаштування</b></div>",()=>"<b>Налаштування</b></div>"+row18.replace(/aria-checked="[^"]*"/,`aria-checked="${S.show18}"`));
+ return h;
+};
+R.feed=feed2;R.music=music2;
+function nx(d,auto){if(S.ci==null)return;if(auto&&S.rep)S.ct=0;else if(S.shuf){S.ci=Math.floor(Math.random()*T.length);S.ct=0}else{S.ci=(S.ci+d+T.length)%T.length;S.ct=0}if(S.cur=="music")go()}
+function pick(t,h,ok){const s=$("#sheet");s.hidden=false;s.innerHTML=`<div class="sh" role="dialog" aria-modal="true" aria-label="${t}" style="max-height:85vh;overflow:auto"><h3>${t}</h3>${h}<div class="end"><button class="chip" data-a="close">${ok?"Скасувати":"Закрити"}</button>${ok?`<button class="btn" data-a="${ok}">Готово</button>`:""}</div></div>`}
+function comp(){CA=[];const s=$("#sheet");s.hidden=false;s.innerHTML=`<div class="sh" role="dialog" aria-modal="true" aria-label="Новий допис" style="max-height:90vh;overflow:auto"><h3>Новий допис</h3><textarea id="cx" rows="4" placeholder="Чим хочете поділитися? Можна з #хештегами"></textarea><div class="chips" style="padding:0"><label class="chip">Фото<input type="file" accept="image/*" data-k="img" hidden></label><label class="chip">Відео<input type="file" accept="video/*" data-k="vid" hidden></label><label class="chip">Файл<input type="file" data-k="file" hidden></label></div><select id="cmus" aria-label="Музика"><option value="">Без музики</option>${T.map((t,i)=>`<option value="${i}">${esc(t[0])}, ${esc(t[1])}</option>`).join("")}</select><div id="al"></div><input id="cd" placeholder="Опис до вкладень (необов’язково)"><select id="cv" aria-label="Хто бачить"><option>Усі</option><option>Лише друзі</option><option>Лише я</option></select><label class="mut"><input type="checkbox" id="c18"> Контент 18+</label><div class="end"><button class="chip" data-a="close">Скасувати</button><button class="btn" data-a="pub2">Опублікувати</button></div></div>`;$("#cx").focus()}
+function search(){const s=$("#sheet");s.hidden=false;s.innerHTML=`<div class="sh" role="dialog" aria-modal="true" aria-label="Пошук"><input id="sq" placeholder="Люди, професії, музика, чати, публікації, #теги" aria-label="Пошук" autocomplete="off"><div class="chips" style="padding:0;flex-wrap:wrap">${LB.map(x=>`<button class="chip ${S.lf==x?"on":""}" data-a="lf" data-i="${x}">${x}</button>`).join("")}<button class="chip" data-a="cols">Мої добірки</button></div><div class="sr" id="sr"></div><div class="end"><button class="chip" data-a="close">Закрити</button></div></div>`;res("");$("#sq").focus()}
+function res(q){
+ q=(q||"").trim().toLowerCase();const r=$("#sr");
+ if(!q&&!S.lf){r.innerHTML=`<p class="mut" style="padding:0 16px">Введіть ім’я, професію, назву треку, #тег або слово з публікації. Або оберіть професію вище.</p>`;return}
+ const has=x=>x.toLowerCase().includes(q);
+ const P=Object.keys(PPL).filter(k=>k!="me"&&!S.blk.has(k)&&(!S.lf||(PLB[k]||[]).includes(S.lf))&&(!q||has(PPL[k][0]+" "+(PLB[k]||[]).join(" ")))).map(u=>`<div class="rw"><span>${av(u)}</span><div class="grow"><b>${PPL[u][0]}</b><div class="mut">${(PLB[u]||[]).join(", ")}${PRIVU.has(u)?", закритий профіль":""}</div></div>${S.friends.has(u)||S.follow.has(u)?`<button class="chip" data-a="inv" data-i="${u}">До проєкту</button>`:PRIVU.has(u)?`<button class="chip" data-a="freq" data-i="${u}">${S.req.has(u)?"Заявку надіслано":"Заявка"}</button>`:`<button class="chip" data-a="fol" data-i="${u}">Стежити</button>`}<button class="chip" data-a="tocol" data-i="${u}">В добірку</button></div>`);
+ const M=!q?[]:T.map((t,i)=>has([t[0],t[1],t[4],t[5]].join(" "))?trk([t,i]):"");
+ const K=!q?[]:CH.map((c,i)=>has(c.n)?`<button class="rw" data-a="sc" data-i="${i}">${cav(c,44)}<div class="grow"><b>${c.n}</b><div class="mut">${{dm:"Чат",gr:"Група",ch:"Канал"}[c.k]}</div></div></button>`:"");
+ const Q=!q||S.lf?[]:POSTS.filter(p=>(p.u=="me"||S.show18||!p.a)&&!S.hid.has(p.id)&&has((p.x||"")+" "+PPL[p.u][0]+" "+(p.cap||""))).map(p2);
+ r.innerHTML=[...P,...M,...K,...Q].join("")||empty("Нічого не знайдено","Спробуйте інше слово, тег або професію.");
+}
+document.addEventListener("input",e=>{const t=e.target;
+ if(t.id=="sk"){S.ct=+t.value;$("#tm").textContent=fm(S.ct)+" / "+T[S.ci][2]}
+ if(t.id=="mq"){S.q=t.value;$("#tl").innerHTML=tl()}
+});
+document.addEventListener("change",e=>{const t=e.target;
+ if(t.dataset&&t.dataset.k&&t.files[0]){const f=t.files[0];CA.push(t.dataset.k=="img"?{k:"img",src:URL.createObjectURL(f),n:f.name}:{k:t.dataset.k,n:f.name});$("#al").innerHTML=CA.map(a=>`<div class="att">${a.k=="img"?"Фото":a.k=="vid"?"Відео":"Файл"}: ${esc(a.n)}</div>`).join("")}
+ if(t.id=="up"){let n=0;[...t.files].forEach(f=>{if(/\.(mp3|wav)$/i.test(f.name)){T.push([f.name.replace(/\.(mp3|wav)$/i,""),"Ви","3:00",180,"Мої завантаження","Інше"]);n++}});toast(n?"Завантажено треків: "+n:"Підтримуються лише MP3 і WAV");go()}
+});
+setInterval(()=>{
+ if(!S.on||S.ci==null)return;const c=T[S.ci];S.ct++;
+ if(S.ct>=c[3]){nx(1,true);return}
+ const r=$("#sk");if(r){r.value=S.ct;$("#tm").textContent=fm(S.ct)+" / "+c[2]}
+},1000);
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-a]");if(!b)return;
+ const a=b.dataset.a,i=b.dataset.i,idx=+i,P=()=>POSTS.find(p=>p.id==idx);
+ switch(a){
+ case"new":comp();return;
+ case"mt":S.mt=i;break;
+ case"pl2":if(S.ci==idx)S.on=!S.on;else{S.ci=idx;S.ct=0;S.on=true}break;
+ case"pp2":S.on=!S.on;break;
+ case"prv":nx(-1);return;
+ case"nxt":nx(1);return;
+ case"shf":S.shuf=!S.shuf;break;
+ case"rep":S.rep=!S.rep;break;
+ case"af":S.arts.has(i)?S.arts.delete(i):S.arts.add(i);break;
+ case"plp":{const p=PLS[idx];if(p.tr.length){S.ci=p.tr[0];S.ct=0;S.on=true}else toast("Плейлист порожній");break}
+ case"pls":toast("Посилання на плейлист скопійовано");return;
+ case"plv":PLS[idx].sv=!PLS[idx].sv;toast(PLS[idx].sv?"Плейлист у вашій бібліотеці":"Плейлист прибрано");break;
+ case"plc":{const p=PLS[idx];p.co=!p.co;p.ed=p.co?["o"]:null;break}
+ case"newpl":pick("Новий плейлист",`<input id="pn" placeholder="Назва плейлиста"><label class="mut"><input type="checkbox" id="pc"> Спільний: друзі зможуть додавати треки</label>`,"mkpl");return;
+ case"mkpl":{const n=$("#pn").value.trim();if(!n){toast("Введіть назву");return}const co=$("#pc").checked;PLS.push({n,by:"me",tr:[],co,ed:co?["o","a"]:null});close();S.mt="pl";toast("Плейлист створено");break}
+ case"addpl":pick("Додати в плейлист",PLS.map((p,j)=>p.by=="me"||p.co?`<button class="rw" data-a="pick" data-i="${j}" data-t="${idx}">${esc(p.n)}</button>`:"").join(""),"");return;
+ case"pick":{const p=PLS[idx],t=+b.dataset.t;if(!p.tr.includes(t))p.tr.push(t);close();toast("Додано в «"+p.n+"»");break}
+ case"tochat":pick("Надіслати в чат",CH.map((c,j)=>c.k!="ch"?`<button class="rw" data-a="sendtr" data-i="${j}">${esc(c.n)}</button>`:"").join(""),"");return;
+ case"sendtr":CH[idx].m.push(["me","♪ "+T[S.ci][0]+", "+T[S.ci][1]]);close();toast("Трек надіслано в чат");return;
+ case"towall":POSTS.unshift({id:++N,u:"me",t:"щойно",x:"",g:-1,l:0,k:0,at:[{k:"mus",i:S.ci}]});toast("Трек на вашій стіні");return;
+ case"rev":S.rev.add(idx);break;
+ case"rx":{const k=i+b.dataset.e;S.rx.has(k)?S.rx.delete(k):S.rx.add(k);break}
+ case"cms":{const v=($("#cmi").value||"").trim();if(!v)return;const p=P();p.cm=p.cm||[["m","Супер!"],["a","Дуже круто, дякую, що поділились."]];p.cm.push(["me",v]);break}
+ case"rsh":{const p=P();POSTS.unshift({...p,id:++N,u:"me",via:p.u,t:"щойно",cm:undefined,l:0});toast("Опубліковано на вашій стіні");break}
+ case"pm":{const m=P().u=="me";pick("Публікація",m?`<button class="rw" data-a="ped" data-i="${idx}">Редагувати</button><button class="rw" data-a="pdel" data-i="${idx}">Видалити</button>`:`<button class="rw" data-a="prep" data-i="${idx}">Поскаржитись на маркування 18+</button><button class="rw" data-a="phide" data-i="${idx}">Сховати публікацію</button>`,"");return}
+ case"ped":S.ed=idx;pick("Редагувати публікацію",`<textarea id="ex" rows="4">${esc(P().x||"")}</textarea>`,"psave");return;
+ case"psave":{const p=POSTS.find(p=>p.id==S.ed);if(p)p.x=$("#ex").value;close();toast("Збережено");break}
+ case"pdel":{const k=POSTS.findIndex(p=>p.id==idx);if(k>=0)POSTS.splice(k,1);close();toast("Публікацію видалено");break}
+ case"prep":close();toast("Скаргу на маркування надіслано модераторам");return;
+ case"phide":S.hid.add(idx);close();toast("Публікацію приховано");break;
+ case"pub2":{const x=$("#cx").value.trim(),m=$("#cmus").value,at=[...CA];if(m!=="")at.push({k:"mus",i:+m});if(!x&&!at.length){toast("Додайте текст або вкладення");return}POSTS.unshift({id:++N,u:"me",t:"щойно",x,g:-1,l:0,k:0,at,cap:$("#cd").value.trim(),a:$("#c18").checked?1:0,v:$("#cv").value});S.tab="fr";close();toast("Опубліковано");break}
+ case"editpf":pick("Редагувати профіль",`<textarea id="bio" rows="4" maxlength="150" placeholder="Про себе: емодзі, посилання, @згадки">${esc(S.bio)}</textarea><div class="mut">Професійні мітки (можна кілька)</div><div class="chips" style="flex-wrap:wrap;padding:0">${LB.map(x=>`<button class="chip ${S.lbl.has(x)?"on":""}" data-a="lb" data-i="${x}">${x}</button>`).join("")}</div>`,"savepf");return;
+ case"lb":S.lbl.has(i)?S.lbl.delete(i):S.lbl.add(i);b.classList.toggle("on");return;
+ case"savepf":S.bio=$("#bio").value;close();toast("Профіль оновлено");break;
+ case"lf":S.lf=S.lf==i?null:i;document.querySelectorAll("[data-a=lf]").forEach(c=>c.classList.toggle("on",c.dataset.i==S.lf));res($("#sq").value);return;
+ case"inv":return;
+ default:return;
+ }
+ go();
+});
+go();
+</script>
+<script>
+Object.assign(S,{priv:false,hidf:false,hidact:false,msgw:"Усі",cmtw:"Усі",co:new Set(),hu:new Set(),pu:null,cols:[{n:"Фотографи для проєктів",u:["o","d"]},{n:"Музиканти",u:["t"]}],prj:[{n:"Альбом про двір",m:[]},{n:"Короткометражка",m:[]}]});
+const FOL=["i","t","a"],REQ=["m","d"];
+class HS extends Set{has(id){if(super.has(id))return true;const p=POSTS.find(x=>x.id==id);return !!p&&p.u!="me"&&(S.blk.has(p.u)||S.hu.has(p.u)||(PRIVU.has(p.u)&&!S.follow.has(p.u)&&!S.friends.has(p.u)))}}
+S.hid=new HS(S.hid);
+const THM=[["Стандартна",""],["Синя ніч","linear-gradient(160deg,#0f2a4d,#1f5fbf)"],["Захід","linear-gradient(160deg,#c8372d,#f5b800)"],["Ліс","linear-gradient(160deg,#124d34,#2e8b57)"],["Бузкова","linear-gradient(160deg,#4b2a6b,#8e5bb5)"]];
+const _ch=R.chats;
+R.chats=()=>{
+ let h=_ch();if(S.chat==null)return h;const c=CH[S.chat];
+ h=h.replace('data-a="back">Назад</button>',()=>'data-a="back">Назад</button><button class="chip" data-a="th">Тема</button>');
+ return `<div class="chbg" style="background:${c.bg||"none"};background-size:cover;background-position:center">${h}</div>`;
+};
+const sel=(t,id,v,o)=>`<div class="line"><b>${t}</b><select id="${id}" aria-label="${t}">${o.map(x=>`<option ${x==v?"selected":""}>${x}</option>`).join("")}</select></div>`;
+const sw3=(k,t,d)=>`<div class="line"><div><b>${t}</b><div class="mut">${d}</div></div><button class="sw" role="switch" aria-checked="${S[k]}" aria-label="${t}" data-a="sw" data-i="${k}"></button></div>`;
+const privBlock=()=>sw3("priv","Закритий профіль","Нові підписники потребують вашого підтвердження.")
+ +(S.priv&&REQ.length?`<div class="line"><b>Заявки на підписку: ${REQ.length}</b><button class="chip" data-a="reqs">Переглянути</button></div>`:"")
+ +sel("Хто може писати вам","pv1",S.msgw,["Усі","Друзі","Ніхто"])
+ +sel("Хто може коментувати","pv2",S.cmtw,["Усі","Друзі","Ніхто"])
+ +sw3("hidf","Сховати списки підписників і підписок","Їх бачитимете лише ви.")
+ +sw3("hidact","Сховати активність і час візиту","Друзі не побачать, коли ви були онлайн.")
+ +`<div class="line"><b>Підписники: ${FOL.length}</b><button class="chip" data-a="fols">Керувати</button></div><div class="line"><b>Заблоковані й обмежені: ${S.blk.size+S.rst.size}</b><button class="chip" data-a="blks">Відкрити</button></div>`
+ +(S.priv?`<div class="line"><b>Як бачать незнайомці</b><button class="chip" data-a="prv0">Показати</button></div>`:"");
+const _me3=R.me;
+R.me=()=>{
+ let h=_me3();
+ if(S.pt=="set")h=h.replace("<b>Налаштування</b></div>",()=>"<b>Налаштування</b></div>"+privBlock());
+ h=h.replace("<b>128</b>",()=>`<b>${FOL.length}</b>`);
+ h=h.replace('<div class="mut">@you</div>',()=>`<div class="mut">@you${S.priv?", закритий профіль":""}${S.hidf?", списки приховано":""}</div>`);
+ return h;
+};
+const rows=(l,fn)=>l.map(fn).join("");
+document.addEventListener("change",e=>{const t=e.target;
+ if(t.id=="bgf"&&t.files[0]){CH[S.chat].bg=`url(${URL.createObjectURL(t.files[0])})`;close();toast("Фон встановлено");go()}
+ if(t.id=="pv1")S.msgw=t.value;
+ if(t.id=="pv2")S.cmtw=t.value;
+});
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-a]");if(!b)return;
+ const a=b.dataset.a,i=b.dataset.i,idx=+i,u=b.dataset.u;
+ switch(a){
+ case"new":S.co=new Set();$("#sheet .end").insertAdjacentHTML("beforebegin",`<div class="mut">Співавтори (необов’язково)</div><div class="chips" style="padding:0;flex-wrap:wrap">${rows([...S.friends],f=>`<button class="chip" data-a="co" data-i="${f}">${PPL[f][0].split(" ")[0]}</button>`)}</div>`);return;
+ case"co":S.co.has(i)?S.co.delete(i):S.co.add(i);b.classList.toggle("on");return;
+ case"pub2":{const p=POSTS[0];if($("#sheet").hidden&&S.co.size&&p&&p.u=="me"&&!p.ca){p.ca=[...S.co];S.co=new Set();go()}return}
+ case"th":pick("Тема чату",rows(THM,(t,j)=>`<button class="rw" data-a="thp" data-i="${j}">${t[0]}</button>`)+`<label class="chip" style="align-self:flex-start">Своє фото на фон<input type="file" id="bgf" accept="image/*" hidden></label>`,"");return;
+ case"thp":CH[S.chat].bg=THM[idx][1];close();toast("Тему змінено");break;
+ case"reqs":pick("Заявки на підписку",REQ.length?rows(REQ,r=>`<div class="rw">${av(r)}<div class="grow"><b>${PPL[r][0]}</b></div><button class="chip" data-a="racc" data-i="${r}">Прийняти</button><button class="chip" data-a="rdec" data-i="${r}">Відхилити</button></div>`):`<p class="mut">Нових заявок немає.</p>`,"");return;
+ case"racc":case"rdec":{const k=REQ.indexOf(i);if(k>=0)REQ.splice(k,1);if(a=="racc")FOL.push(i);toast(a=="racc"?"Заявку прийнято":"Заявку відхилено");b.closest(".rw").remove();go();return}
+ case"fols":pick("Підписники",FOL.length?rows(FOL,f=>`<div class="rw">${av(f)}<div class="grow"><b>${PPL[f][0]}</b></div><button class="chip" data-a="frm" data-i="${f}">Видалити</button></div>`):`<p class="mut">Поки немає підписників.</p>`,"");return;
+ case"frm":{const k=FOL.indexOf(i);if(k>=0)FOL.splice(k,1);b.closest(".rw").remove();go();toast("Підписника видалено");return}
+ case"blks":{const l=rows([...S.blk],x=>`<div class="rw">${av(x)}<div class="grow"><b>${PPL[x][0]}</b><div class="mut">Заблоковано</div></div><button class="chip" data-a="unb" data-i="${x}">Розблокувати</button></div>`)+rows([...S.rst],x=>`<div class="rw">${av(x)}<div class="grow"><b>${PPL[x][0]}</b><div class="mut">Обмежено</div></div><button class="chip" data-a="unr" data-i="${x}">Зняти</button></div>`);pick("Заблоковані й обмежені",l||`<p class="mut">Список порожній.</p>`,"");return}
+ case"unb":S.blk.delete(i);b.closest(".rw").remove();go();return;
+ case"unr":S.rst.delete(i);b.closest(".rw").remove();go();return;
+ case"prv0":pick("Так бачать ваш профіль незнайомці",`<div style="text-align:center;padding:12px"><span class="av" style="--c:#5C6B7A;width:64px;height:64px;font-size:26px">В</span><h3>Ваш профіль</h3><p class="mut">Профіль закритий. Підпишіться, щоб побачити публікації, фото й список друзів.</p><button class="btn">Надіслати заявку</button></div>`,"");return;
+ case"pm":{const p=POSTS.find(x=>x.id==idx);if(!p||p.u=="me")return;const n=PPL[p.u][0].split(" ")[0];pick("Публікація",`<button class="rw" data-a="prep" data-i="${idx}">Поскаржитись на маркування 18+</button><button class="rw" data-a="phide" data-i="${idx}">Сховати цю публікацію</button><button class="rw" data-a="hu" data-i="${p.u}">Ховати всі публікації: ${n}</button><button class="rw" data-a="rst" data-i="${p.u}">Обмежити: ${n}</button><button class="rw" data-a="blk" data-i="${p.u}">Заблокувати: ${n}</button>`,"");return}
+ case"hu":S.hu.add(i);close();toast("Публікації цього користувача приховано");break;
+ case"rst":S.rst.add(i);close();toast("Користувача обмежено");return;
+ case"blk":S.blk.add(i);S.friends.delete(i);S.follow.delete(i);close();toast("Користувача заблоковано");break;
+ case"freq":S.req.add(i);toast("Заявку на підписку надіслано");res($("#sq").value);return;
+ case"cols":pick("Мої добірки",rows(S.cols,c=>`<div class="post"><b>${esc(c.n)}</b><div class="mut">${c.u.length?c.u.map(x=>PPL[x][0]).join(", "):"Поки порожньо"}</div></div>`)+`<input id="cn" placeholder="Нова добірка: назва">`,"mkcol");return;
+ case"mkcol":{const n=$("#cn").value.trim();if(!n){toast("Введіть назву добірки");return}S.cols.push({n,u:[]});close();toast("Добірку створено");return}
+ case"tocol":pick("Додати до добірки",rows(S.cols,(c,j)=>`<button class="rw" data-a="addcol" data-i="${j}" data-u="${i}">${esc(c.n)}</button>`),"");return;
+ case"addcol":{const c=S.cols[idx];if(!c.u.includes(u))c.u.push(u);close();toast("Додано до добірки «"+c.n+"»");return}
+ case"inv":S.pu=i;pick("Запросити до проєкту: "+PPL[i][0].split(" ")[0],rows(S.prj,(p,j)=>`<button class="rw" data-a="invp" data-i="${j}" data-u="${i}">${esc(p.n)}</button>`)+`<input id="pjn" placeholder="Або створіть новий проєкт">`,"newprj");return;
+ case"invp":{const p=S.prj[idx];if(!p.m.includes(u))p.m.push(u);close();toast("Запрошення до «"+p.n+"» надіслано");return}
+ case"newprj":{const n=$("#pjn").value.trim();if(!n){toast("Оберіть проєкт або введіть назву");return}S.prj.push({n,m:[S.pu]});close();toast("Проєкт створено, запрошення надіслано");return}
+ default:return;
+ }
+ go();
+});
 go();
 </script>
 </body>
